@@ -6,19 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hello World | fangzheng</title>
+  <title>hashmqp的理解 | fangzheng</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="HashMap实现原理HashMap的主干是一个Entry数组。Entry是HashMap的基本组成单元，每一个Entry包含一个key-value键值对。 12&#x2F;&#x2F;HashMap的主干数组，可以看到就是一个Entry数组，初始值为空数组&amp;#123;&amp;#125;，主干数组的长度一定是2的次。transient Entry&lt;K,V&gt;[] table &#x3D; (Entry&lt;K,V&gt;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2020/05/21/hello-world/index.html">
+<meta property="og:title" content="hashmqp的理解">
+<meta property="og:url" content="http://yoursite.com/2018/03/21/hashmap01/index.html">
 <meta property="og:site_name" content="fangzheng">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="HashMap实现原理HashMap的主干是一个Entry数组。Entry是HashMap的基本组成单元，每一个Entry包含一个key-value键值对。 12&#x2F;&#x2F;HashMap的主干数组，可以看到就是一个Entry数组，初始值为空数组&amp;#123;&amp;#125;，主干数组的长度一定是2的次。transient Entry&lt;K,V&gt;[] table &#x3D; (Entry&lt;K,V&gt;">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-05-21T05:14:57.095Z">
-<meta property="article:modified_time" content="2020-05-21T05:14:57.095Z">
+<meta property="og:image" content="http://yoursite.com/img/hashmap01.png">
+<meta property="article:published_time" content="2018-03-21T06:15:21.000Z">
+<meta property="article:modified_time" content="2020-05-21T07:26:43.569Z">
 <meta property="article:author" content="FangZheng">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/img/hashmap01.png">
   
     <link rel="alternative" href="/atom.xml" title="fangzheng" type="application/atom+xml">
   
@@ -154,39 +156,62 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-hashmap01" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      hashmqp的理解
     </h1>
   
 
         
-        <a href="/2020/05/21/hello-world/" class="archive-article-date">
-  	<time datetime="2020-05-21T05:14:57.095Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-21</time>
+        <a href="/2018/03/21/hashmap01/" class="archive-article-date">
+  	<time datetime="2018-03-21T06:15:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <h3 id="HashMap实现原理"><a href="#HashMap实现原理" class="headerlink" title="HashMap实现原理"></a>HashMap实现原理</h3><p>HashMap的主干是一个Entry数组。Entry是HashMap的基本组成单元，每一个Entry包含一个key-value键值对。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//HashMap的主干数组，可以看到就是一个Entry数组，初始值为空数组&#123;&#125;，主干数组的长度一定是2的次。</span><br><span class="line">transient Entry&lt;K,V&gt;[] table = (Entry&lt;K,V&gt;[]) EMPTY_TABLE;</span><br></pre></td></tr></table></figure>
+<p>Entry是HashMap中的一个静态内部类。代码如下</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">static class Entry&lt;K,V&gt; implements Map.Entry&lt;K,V&gt; &#123;</span><br><span class="line">        final K key;</span><br><span class="line">        V value;</span><br><span class="line">        Entry&lt;K,V&gt; next;//存储指向下一个Entry的引用，单链表结构</span><br><span class="line">        int <span class="built_in">hash</span>;//对key的hashcode值进行<span class="built_in">hash</span>运算后得到的值，存储在Entry，避免重复计算</span><br><span class="line"></span><br><span class="line">        /**</span><br><span class="line">         * Creates new entry.</span><br><span class="line">         */</span><br><span class="line">        Entry(int h, K k, V v, Entry&lt;K,V&gt; n) &#123;</span><br><span class="line">            value = v;</span><br><span class="line">            next = n;</span><br><span class="line">            key = k;</span><br><span class="line">            <span class="built_in">hash</span> = h;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>所以hashmap整体结构如下：<br><img src="/img/hashmap01.png"><br>简单来说，HashMap由数组+链表组成的，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的，如果定位到的数组位置不含链表（当前entry的next指向null）,那么对于查找，添加等操作很快，仅需一次寻址即可；如果定位到的数组包含链表，对于添加操作，其时间复杂度为O(n)，首先遍历链表，存在即覆盖，否则新增；对于查找操作来讲，仍需遍历链表，然后通过key对象的equals方法逐一比对查找。所以，性能考虑，HashMap中的链表出现越少，性能才会越好。<br>还有几个比较重要的字段</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//实际存储的key-value键值对的个数</span><br><span class="line">transient int size;</span><br><span class="line">//阈值，当table == &#123;&#125;时，该值为初始容量（初始容量默认为16）；当table被填充了，也就是为table分配内存空间后，threshold一般为 capacity*loadFactory。HashMap在进行扩容时需要参考threshold，后面会详细谈到</span><br><span class="line">int threshold;</span><br><span class="line">//负载因子，代表了table的填充度有多少，默认是0.75</span><br><span class="line">final <span class="built_in">float</span> loadFactor;</span><br><span class="line">//用于快速失败，由于HashMap非线程安全，在对HashMap进行迭代时，如果期间其他线程的参与导致HashMap的结构发生变化了（比如put，remove等操作），需要抛出异常ConcurrentModificationException</span><br><span class="line">transient int modCount;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>hashmap有4个构造器其他构造器如果用户没有传入initialCapacity 和loadFactor这两个参数，会使用默认值initialCapacity默认为16，loadFactory默认为0.75<br>我们看下其中一个</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public HashMap(int initialCapacity, <span class="built_in">float</span> loadFactor) &#123;　　　　　//此处对传入的初始容量进行校验，最大不能超过MAXIMUM_CAPACITY = 1&lt;&lt;30(230)</span><br><span class="line">        <span class="keyword">if</span> (initialCapacity &lt; 0)</span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"Illegal initial capacity: "</span> +</span><br><span class="line">                                               initialCapacity);</span><br><span class="line">        <span class="keyword">if</span> (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">            initialCapacity = MAXIMUM_CAPACITY;</span><br><span class="line">        <span class="keyword">if</span> (loadFactor &lt;= 0 || Float.isNaN(loadFactor))</span><br><span class="line">            throw new IllegalArgumentException(<span class="string">"Illegal load factor: "</span> +</span><br><span class="line">                                               loadFactor);</span><br><span class="line"></span><br><span class="line">        this.loadFactor = loadFactor;</span><br><span class="line">        threshold = initialCapacity;　　　　　</span><br><span class="line">        init();//init方法在HashMap中没有实际实现，不过在其子类如 linkedHashMap中就会有对应实现</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>从上面这段代码我们可以看出，在常规构造器中，没有为数组table分配内存空间（有一个入参为指定Map的构造器例外），而是在执行put操作的时候才真正构建table数组<br>接下来是put的操作</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public HashMap(int initialCapacity, <span class="built_in">float</span> loadFactor) public V put(K key, V value) &#123;</span><br><span class="line">        //如果table数组为空数组&#123;&#125;，进行数组填充（为table分配实际内存空间），入参为threshold，此时threshold为initialCapacity 默认是1&lt;&lt;4(24=16)</span><br><span class="line">        <span class="keyword">if</span> (table == EMPTY_TABLE) &#123;</span><br><span class="line">            inflateTable(threshold);</span><br><span class="line">        &#125;</span><br><span class="line">       //如果key为null，存储位置为table[0]或table[0]的冲突链上</span><br><span class="line">        <span class="keyword">if</span> (key == null)</span><br><span class="line">            <span class="built_in">return</span> putForNullKey(value);</span><br><span class="line">        int <span class="built_in">hash</span> = <span class="built_in">hash</span>(key);//对key的hashcode进一步计算，确保散列均匀</span><br><span class="line">        int i = indexFor(<span class="built_in">hash</span>, table.length);//获取在table中的实际位置</span><br><span class="line">        <span class="keyword">for</span> (Entry&lt;K,V&gt; e = table[i]; e != null; e = e.next) &#123;</span><br><span class="line">        //如果该对应数据已存在，执行覆盖操作。用新value替换旧value，并返回旧value</span><br><span class="line">            Object k;</span><br><span class="line">            <span class="keyword">if</span> (e.hash == <span class="built_in">hash</span> &amp;&amp; ((k = e.key) == key || key.equals(k))) &#123;</span><br><span class="line">                V oldValue = e.value;</span><br><span class="line">                e.value = value;</span><br><span class="line">                e.recordAccess(this);</span><br><span class="line">                <span class="built_in">return</span> oldValue;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        modCount++;//保证并发访问时，若HashMap内部结构发生变化，快速响应失败</span><br><span class="line">        addEntry(<span class="built_in">hash</span>, key, value, i);//新增一个entry</span><br><span class="line">        <span class="built_in">return</span> null;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>其中里面有个inflateTable这个方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private void inflateTable(int toSize) &#123;</span><br><span class="line">        int capacity = roundUpToPowerOf2(toSize);//capacity一定是2的次幂</span><br><span class="line">        threshold = (int) Math.min(capacity * loadFactor, MAXIMUM_CAPACITY + 1);//此处为threshold赋值，取capacity*loadFactor和MAXIMUM_CAPACITY+1的最小值，capaticy一定不会超过MAXIMUM_CAPACITY，除非loadFactor大于1</span><br><span class="line">        table = new Entry[capacity];</span><br><span class="line">        initHashSeedAsNeeded(capacity);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>inflateTable这个方法用于为主干数组table在内存中分配存储空间，通过roundUpToPowerOf2(toSize)可以确保capacity为大于或等于toSize的最接近toSize的二次幂，比如toSize=13,则capacity=16;to_size=16,capacity=16;to_size=17,capacity=32.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private static int roundUpToPowerOf2(int number) &#123;</span><br><span class="line">       // assert number &gt;= 0 : <span class="string">"number must be non-negative"</span>;</span><br><span class="line">       <span class="built_in">return</span> number &gt;= MAXIMUM_CAPACITY</span><br><span class="line">               ? MAXIMUM_CAPACITY</span><br><span class="line">               : (number &gt; 1) ? Integer.highestOneBit((number - 1) &lt;&lt; 1) : 1;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>roundUpToPowerOf2中的这段处理使得数组长度一定为2的次幂，Integer.highestOneBit是用来获取最左边的bit（其他bit位为0）所代表的数值.</p>
+<p>再来看下hash这个方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//这是一个神奇的函数，用了很多的异或，移位等运算，对key的hashcode进一步进行计算以及二进制位的调整等来保证最终获取的存储位置尽量分布均匀</span><br><span class="line">final int <span class="built_in">hash</span>(Object k) &#123;</span><br><span class="line">        int h = hashSeed;</span><br><span class="line">        <span class="keyword">if</span> (0 != h &amp;&amp; k instanceof String) &#123;</span><br><span class="line">            <span class="built_in">return</span> sun.misc.Hashing.stringHash32((String) k);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        h ^= k.hashCode();</span><br><span class="line"></span><br><span class="line">        h ^= (h &gt;&gt;&gt; 20) ^ (h &gt;&gt;&gt; 12);</span><br><span class="line">        <span class="built_in">return</span> h ^ (h &gt;&gt;&gt; 7) ^ (h &gt;&gt;&gt; 4);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>算出hash值以后 在通过 位运算 获取真正的数组下标</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static int indexFor(int h, int length) &#123;</span><br><span class="line">        <span class="built_in">return</span> h &amp; (length-1);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>说道算数组下表 就想起前面疏导 数组的长度 为什么要是 2的n次幂了，因为 当容量一定是2^n时，h &amp; (length - 1) == h % length，它俩是等价不等效的，位运算效率非常高，实际开发中，很多的数值运算以及逻辑判断都可以转换成位运算，但是位运算通常是难以理解的，因为其本身就是给电脑运算的，运算的是二进制，而不是给人类运算的，人类运算的是十进制，这也是位运算在普遍的开发者中间不太流行的原因(门槛太高)。</p>
+<p>意思就是HashMap寻找Index位置是通过位运算计算出来的，但是原理是对length取余数，只有是2的次幂的时候h &amp; (length - 1) == h % length</p>
+<p>接下来再看addEntry的实现：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void addEntry(int <span class="built_in">hash</span>, K key, V value, int bucketIndex) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((size &gt;= threshold) &amp;&amp; (null != table[bucketIndex])) &#123;</span><br><span class="line">            resize(2 * table.length);//当size超过临界阈值threshold，并且即将发生哈希冲突时进行扩容</span><br><span class="line">            <span class="built_in">hash</span> = (null != key) ? <span class="built_in">hash</span>(key) : 0;</span><br><span class="line">            bucketIndex = indexFor(<span class="built_in">hash</span>, table.length);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        createEntry(<span class="built_in">hash</span>, key, value, bucketIndex);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>通过上述代码可以看出当发生哈希冲突并且size大于阈值的时候，需要进行数组扩容，扩容时，需要新建一个长度为之前数组2倍的新的数组，然后将当前的Entry数组中的元素全部传输过去，扩容后的新数组长度为之前的2倍，所以扩容相对来说是个耗资源的操作。</p>
+<p>继续看上面提到的resize方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void resize(int newCapacity) &#123;</span><br><span class="line">        Entry[] oldTable = table;</span><br><span class="line">        int oldCapacity = oldTable.length;</span><br><span class="line">        <span class="keyword">if</span> (oldCapacity == MAXIMUM_CAPACITY) &#123;</span><br><span class="line">            threshold = Integer.MAX_VALUE;</span><br><span class="line">            <span class="built_in">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Entry[] newTable = new Entry[newCapacity];</span><br><span class="line">        transfer(newTable, initHashSeedAsNeeded(newCapacity));</span><br><span class="line">        table = newTable;</span><br><span class="line">        threshold = (int)Math.min(newCapacity * loadFactor, MAXIMUM_CAPACITY + 1);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>如果数组进行扩容数组的长度发生变化  而数组的下表也可能会发生变化 所以需要计算原油元素在新数组的下标。先看transfer这个方法</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void transfer(Entry[] newTable, boolean <span class="built_in">rehash</span>) &#123;</span><br><span class="line">        int newCapacity = newTable.length;　　　　　//<span class="keyword">for</span>循环中的代码，逐个遍历链表，重新计算索引位置，将老数组数据复制到新数组中去（数组不存储实际数据，所以仅仅是拷贝引用而已）</span><br><span class="line">        <span class="keyword">for</span> (Entry&lt;K,V&gt; e : table) &#123;</span><br><span class="line">            <span class="keyword">while</span>(null != e) &#123;</span><br><span class="line">                Entry&lt;K,V&gt; next = e.next;</span><br><span class="line">                <span class="keyword">if</span> (<span class="built_in">rehash</span>) &#123;</span><br><span class="line">                    e.hash = null == e.key ? 0 : <span class="built_in">hash</span>(e.key);</span><br><span class="line">                &#125;</span><br><span class="line">                int i = indexFor(e.hash, newCapacity);　　　　　　　　　 //将当前entry的next链指向新的索引位置,newTable[i]有可能为空，有可能也是个entry链，如果是entry链，直接在链表头部插入。</span><br><span class="line">                e.next = newTable[i];</span><br><span class="line">                newTable[i] = e;</span><br><span class="line">                e = next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个方法将老数组中的数据逐个链表地遍历，扔到新的扩容后的数组中，我们的数组索引位置的计算是通过 对key值的hashcode进行hash扰乱运算后，再通过和 length-1进行位运算得到最终数组索引位置。</p>
 
       
 
@@ -266,7 +291,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/21/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/03/21/hashmap01/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -278,20 +303,6 @@
 </article>
 
   
-<nav id="article-nav">
-  
-    <a href="/2020/05/21/my-blog-first/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          我的一个博客
-        
-      </div>
-    </a>
-  
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
