@@ -6,17 +6,13 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>spring源码的理解 | fangzheng</title>
+  <title>Archives: 2019/3 | fangzheng</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="sping源码入口配置类 12345@ComponentScan(&quot;com.aaa&quot;)		@Configuration		public class AppConfig &amp;#123;		&amp;#125;">
-<meta property="og:type" content="article">
-<meta property="og:title" content="spring源码的理解">
-<meta property="og:url" content="http://yoursite.com/2019/12/21/spring01/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="fangzheng">
+<meta property="og:url" content="http://yoursite.com/archives/2019/03/index.html">
 <meta property="og:site_name" content="fangzheng">
-<meta property="og:description" content="sping源码入口配置类 12345@ComponentScan(&quot;com.aaa&quot;)		@Configuration		public class AppConfig &amp;#123;		&amp;#125;">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-12-21T12:20:12.000Z">
-<meta property="article:modified_time" content="2020-05-21T08:26:25.895Z">
 <meta property="article:author" content="FangZheng">
 <meta name="twitter:card" content="summary">
   
@@ -154,191 +150,49 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-spring01" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      spring源码的理解
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/" class="archive-article-date">
+  	<time datetime="2019-03-02T13:12:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-02</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/">为什么在foreach循环中不能add/remove元素的分析</a>
     </h1>
   
 
-        
-        <a href="/2019/12/21/spring01/" class="archive-article-date">
-  	<time datetime="2019-12-21T12:20:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="sping源码入口"><a href="#sping源码入口" class="headerlink" title="sping源码入口"></a>sping源码入口</h2><p>配置类</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@ComponentScan(<span class="string">"com.aaa"</span>)</span><br><span class="line">		@Configuration</span><br><span class="line">		public class AppConfig &#123;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
+        <div class="article-info info-on-right">
+          
+          
 
-<p>入口类</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">AnnotationConfigApplicationContext app =</span><br><span class="line">				new AnnotationConfigApplicationContext(AppConfig.class);</span><br><span class="line">		String[] strs = app.getBeanDefinitionNames();</span><br><span class="line">		<span class="keyword">for</span> (String str:strs) &#123;</span><br><span class="line">			System.out.println(str);</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
-
-<p>构造器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public AnnotationConfigApplicationContext(Class&lt;?&gt;... annotatedClasses) &#123;</span><br><span class="line">	//调用父类构造方法实例化bean工厂DefaultListableBeanFactory</span><br><span class="line">	//初始化BeanDefinition注解读取器以及包扫描器</span><br><span class="line">	this();//第一行代码</span><br><span class="line">	</span><br><span class="line">	//把传入的类进行注册</span><br><span class="line">	//传入的类有两种情况</span><br><span class="line">	//其一是加了@Configuration的配置类FULL</span><br><span class="line">	//其二是没有@Configuration但是有@Component@Service等注解的普通类LITE</span><br><span class="line">	register(annotatedClasses);//第二行代码</span><br><span class="line">	</span><br><span class="line">	refresh();//这个最难 第三行代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="从构造器的第一行代码看起："><a href="#从构造器的第一行代码看起：" class="headerlink" title="从构造器的第一行代码看起："></a>从构造器的第一行代码看起：</h3><p>由于AnnotationConfigApplicationContext extends GenericApplicationContext<br>所以实例AnnotationConfigApplicationContext 的时候会调用GenericApplicationContext的构造器如下：</p>
-<p>bean工厂的初始化</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public <span class="function"><span class="title">GenericApplicationContext</span></span>() &#123;</span><br><span class="line">	this.beanFactory = new DefaultListableBeanFactory();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> BeanDefinition的读取器和扫描器<br>BeanDefinition是spring对bean的描述类 简称bd，里面有属性例如scope，lazy，dependsOn等</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public <span class="function"><span class="title">AnnotationConfigApplicationContext</span></span>() &#123;</span><br><span class="line">		this.reader = new AnnotatedBeanDefinitionReader(this);</span><br><span class="line">		//这个scanner不重要，他仅仅是为了程序员手动调用scan方法才会用到。后面我们做扫描会再new一个scanner</span><br><span class="line">		this.scanner = new ClassPathBeanDefinitionScanner(this);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p> BeanDefinition的读取器</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public AnnotatedBeanDefinitionReader(BeanDefinitionRegistry registry, Environment environment) &#123;</span><br><span class="line">	Assert.notNull(registry, <span class="string">"BeanDefinitionRegistry must not be null"</span>);</span><br><span class="line">	Assert.notNull(environment, <span class="string">"Environment must not be null"</span>);</span><br><span class="line">	this.registry = registry;</span><br><span class="line">	this.conditionEvaluator = new ConditionEvaluator(registry, environment, null);//condition评估会用到</span><br><span class="line">	AnnotationConfigUtils.registerAnnotationConfigProcessors(this.registry);//重要方法</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>registerAnnotationConfigProcessors</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;BeanDefinitionHolder&gt; beanDefs = new LinkedHashSet&lt;&gt;(8);</span><br><span class="line">	//beanName=org.springframework.context.annotation.internalConfigurationAnnotationProcessor</span><br><span class="line">	<span class="keyword">if</span> (!registry.containsBeanDefinition(CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME)) &#123;</span><br><span class="line">		//spring内部的bd，ConfigurationClassPostProcessor，beanName是上面的字串</span><br><span class="line">		RootBeanDefinition def = new RootBeanDefinition(ConfigurationClassPostProcessor.class);</span><br><span class="line">		def.setSource(<span class="built_in">source</span>);</span><br><span class="line">		beanDefs.add(registerPostProcessor(registry, def,CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>registerPostProcessor</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//还在启动阶段</span><br><span class="line">	// Still <span class="keyword">in</span> startup registration phase</span><br><span class="line">	//bd的map</span><br><span class="line">	this.beanDefinitionMap.put(beanName, beanDefinition);</span><br><span class="line">	//beanName的集合</span><br><span class="line">	this.beanDefinitionNames.add(beanName);</span><br></pre></td></tr></table></figure>
-
-<p>到此this结束</p>
-<p>总结  第一行代码this（）： 主要的工作是：<br>实例bean工厂<br>bd的读取器reader<br>bd的扫描器scanner（不重要）<br>注册了5个rootBD</p>
-<h3 id="第二行代码register-annotatedClasses"><a href="#第二行代码register-annotatedClasses" class="headerlink" title="第二行代码register(annotatedClasses)"></a>第二行代码register(annotatedClasses)</h3><p>reader是第一行代码this创建的，利用bd读取器去注册配置类和普通类</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public void register(Class&lt;?&gt;... annotatedClasses) &#123;</span><br><span class="line">		Assert.notEmpty(annotatedClasses, <span class="string">"At least one annotated class must be specified"</span>);</span><br><span class="line">		this.reader.register(annotatedClasses);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>这第三行this.reader.register(annotatedClasses);最终调用的代码如下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&lt;T&gt; void doRegisterBean(Class&lt;T&gt; annotatedClass, @Nullable Supplier&lt;T&gt; instanceSupplier, @Nullable String name,</span><br><span class="line">			@Nullable Class&lt;? extends Annotation&gt;[] qualifiers, BeanDefinitionCustomizer... definitionCustomizers) &#123;</span><br><span class="line">		//带注解的bd</span><br><span class="line">		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(annotatedClass);</span><br><span class="line">		///condition的判断，如果不满足condition，那么这个bean不会被注册</span><br><span class="line">		<span class="keyword">if</span> (this.conditionEvaluator.shouldSkip(abd.getMetadata())) &#123;</span><br><span class="line">			<span class="built_in">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		abd.setInstanceSupplier(instanceSupplier);</span><br><span class="line">		ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(abd);</span><br><span class="line">		//设置单例，多例</span><br><span class="line">		abd.setScope(scopeMetadata.getScopeName());</span><br><span class="line">		String beanName = (name != null ? name : this.beanNameGenerator.generateBeanName(abd, this.registry));</span><br><span class="line">		//处理公共的注解Lazy，Primary，DependsOn，Role</span><br><span class="line">		AnnotationConfigUtils.processCommonDefinitionAnnotations(abd);</span><br><span class="line">		//限定符处理，不重要，可以忽略</span><br><span class="line">		<span class="keyword">if</span> (qualifiers != null) &#123;</span><br><span class="line">			<span class="keyword">for</span> (Class&lt;? extends Annotation&gt; qualifier : qualifiers) &#123;</span><br><span class="line">				<span class="keyword">if</span> (Primary.class == qualifier) &#123;</span><br><span class="line">					abd.setPrimary(<span class="literal">true</span>);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span> (Lazy.class == qualifier) &#123;</span><br><span class="line">					abd.setLazyInit(<span class="literal">true</span>);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123;</span><br><span class="line">					abd.addQualifier(new AutowireCandidateQualifier(qualifier));</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (BeanDefinitionCustomizer customizer : definitionCustomizers) &#123;</span><br><span class="line">			customizer.customize(abd);</span><br><span class="line">		&#125;</span><br><span class="line">		//bdHolder只是在bd上又包装了一层</span><br><span class="line">		BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(abd, beanName);</span><br><span class="line">		//代理模式处理</span><br><span class="line">		definitionHolder = AnnotationConfigUtils.applyScopedProxyMode(scopeMetadata, definitionHolder, this.registry);</span><br><span class="line">		//注册bd，最最核心就这一行，前面的都可忽略</span><br><span class="line">		BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p>registerBeanDefinition</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public static void registerBeanDefinition(</span><br><span class="line">			BeanDefinitionHolder definitionHolder, BeanDefinitionRegistry registry)</span><br><span class="line">			throws BeanDefinitionStoreException &#123;</span><br><span class="line"></span><br><span class="line">		// Register bean definition under primary name.</span><br><span class="line">		String beanName = definitionHolder.getBeanName();</span><br><span class="line">		//核心代码</span><br><span class="line">		registry.registerBeanDefinition(beanName, definitionHolder.getBeanDefinition());</span><br><span class="line"></span><br><span class="line">		// Register aliases <span class="keyword">for</span> bean name, <span class="keyword">if</span> any.</span><br><span class="line">		//处理bean的别名</span><br><span class="line">		String[] aliases = definitionHolder.getAliases();</span><br><span class="line">		<span class="keyword">if</span> (aliases != null) &#123;</span><br><span class="line">			<span class="keyword">for</span> (String <span class="built_in">alias</span> : aliases) &#123;</span><br><span class="line">				registry.registerAlias(beanName, <span class="built_in">alias</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p>registry.registerBeanDefinition的核心代码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//在第三行代码refresh中会在alreadyCreated的<span class="built_in">set</span>集合添加beanName</span><br><span class="line">	//这样一来hasBeanCreationStarted()就是返回<span class="literal">true</span>了</span><br><span class="line">	//但是前两行代码注册bd走的都是<span class="keyword">else</span></span><br><span class="line">	<span class="keyword">if</span> (hasBeanCreationStarted()) &#123;</span><br><span class="line">			//第三行代码注册bd会进来这里</span><br><span class="line">			//省略</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			// Still <span class="keyword">in</span> startup registration phase</span><br><span class="line">			//还在启动注册阶段</span><br><span class="line">			//bd的map</span><br><span class="line">			this.beanDefinitionMap.put(beanName, beanDefinition);</span><br><span class="line">			//beanName的集合</span><br><span class="line">			this.beanDefinitionNames.add(beanName);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>women ziji的appconfig也注册进去了</p>
-<p>前两行代码主要做了以下事情<br>实例bean工厂<br>scaner，<br>reader<br>注册spring5个rootBD<br>注册我们写的配置类或者普通类</p>
-<h3 id="接下来是第三行代码refresh-这个最难-第三行代码"><a href="#接下来是第三行代码refresh-这个最难-第三行代码" class="headerlink" title="接下来是第三行代码refresh();//这个最难 第三行代码"></a>接下来是第三行代码refresh();//这个最难 第三行代码</h3>
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
         </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
-        </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/12/21/spring01/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
   
   
-    <a href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">为什么在foreach循环中不能add/remove元素的分析</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -361,8 +215,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

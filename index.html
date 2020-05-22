@@ -218,6 +218,74 @@
 
 
   
+    <article id="post-foreach循环中不能listremove" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/">为什么在foreach循环中不能add/remove元素的分析</a>
+    </h1>
+  
+
+        
+        <a href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/" class="archive-article-date">
+  	<time datetime="2019-03-02T13:12:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先上代码。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; a = new ArrayList&lt;String&gt;();</span><br><span class="line"> a.add(<span class="string">"1"</span>);</span><br><span class="line"> a.add(<span class="string">"2"</span>);</span><br><span class="line"> <span class="keyword">for</span> (String temp : a) &#123;</span><br><span class="line">     <span class="keyword">if</span>(<span class="string">"2"</span>.equals(temp))&#123;</span><br><span class="line">         a.remove(temp);</span><br><span class="line">&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时运行代码发现 抛出异常java.util.ConcurrentModificationException。控制台输出如下：<br>Exception in thread “main” java.util.ConcurrentModificationException<br>at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:859)<br>at java.util.ArrayList$Itr.next(ArrayList.java:831)<br>at luyudepackage.waitTest.main(waitTest.java:57)</p>
+        
+          <a class="article-more-a" href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hashmap01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
