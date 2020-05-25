@@ -6,28 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>spring循环依赖 | fangzheng</title>
+  <title>JVM | fangzheng</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="开始spring内部如何解决循环依赖的问题  一定是单例的Bean中 属性相互引用 就像是A中有B  B中有A这样">
+  <meta name="description" content="JVM 的主要组成部分及其作用JVM包含两个子系统和两个组件，两个子系统为Class loader(类装载)、Execution engine(执行引擎)；两个组件为Runtime data area(运行时数据区)、Native Interface(本地接口)。 Class loader(类装载)：根据给定的全限定名类名(如：java.lang.Object)来装载class文件到Runtime">
 <meta property="og:type" content="article">
-<meta property="og:title" content="spring循环依赖">
-<meta property="og:url" content="http://yoursite.com/2019/12/19/spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/index.html">
+<meta property="og:title" content="JVM">
+<meta property="og:url" content="http://yoursite.com/2019/01/11/JVM/index.html">
 <meta property="og:site_name" content="fangzheng">
-<meta property="og:description" content="开始spring内部如何解决循环依赖的问题  一定是单例的Bean中 属性相互引用 就像是A中有B  B中有A这样">
+<meta property="og:description" content="JVM 的主要组成部分及其作用JVM包含两个子系统和两个组件，两个子系统为Class loader(类装载)、Execution engine(执行引擎)；两个组件为Runtime data area(运行时数据区)、Native Interface(本地接口)。 Class loader(类装载)：根据给定的全限定名类名(如：java.lang.Object)来装载class文件到Runtime">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/img/springxunhuna01.jpg">
-<meta property="og:image" content="http://yoursite.com/img/springxunhuan02.jpg">
-<meta property="og:image" content="http://yoursite.com/img/springxunhuan04.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/springxunhuan09.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/springxunhuan08.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/springxunhuan07.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/springxunhuan05.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/springxunhuan03.jpg">
-<meta property="article:published_time" content="2019-12-19T12:12:03.000Z">
-<meta property="article:modified_time" content="2020-05-22T08:28:33.933Z">
+<meta property="og:image" content="http://yoursite.com/img/jvm01.png">
+<meta property="og:image" content="http://yoursite.com/img/jvm02.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/11/JVM/img/jvm03">
+<meta property="article:published_time" content="2019-01-11T14:23:14.000Z">
+<meta property="article:modified_time" content="2020-05-25T03:52:26.354Z">
 <meta property="article:author" content="FangZheng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/img/springxunhuna01.jpg">
+<meta name="twitter:image" content="http://yoursite.com/img/jvm01.png">
   
     <link rel="alternative" href="/atom.xml" title="fangzheng" type="application/atom+xml">
   
@@ -163,43 +158,56 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-spring循环依赖" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-JVM" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      spring循环依赖
+      JVM
     </h1>
   
 
         
-        <a href="/2019/12/19/spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/" class="archive-article-date">
-  	<time datetime="2019-12-19T12:12:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-19</time>
+        <a href="/2019/01/11/JVM/" class="archive-article-date">
+  	<time datetime="2019-01-11T14:23:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-11</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h2><p>spring内部如何解决循环依赖的问题  一定是单例的Bean中 属性相互引用 就像是A中有B  B中有A这样<br><img src="/img/springxunhuna01.jpg"></p>
+        <h3 id="JVM-的主要组成部分及其作用"><a href="#JVM-的主要组成部分及其作用" class="headerlink" title="JVM 的主要组成部分及其作用"></a>JVM 的主要组成部分及其作用</h3><p>JVM包含两个子系统和两个组件，两个子系统为Class loader(类装载)、Execution engine(执行引擎)；两个组件为Runtime data area(运行时数据区)、Native Interface(本地接口)。</p>
+<p>Class loader(类装载)：根据给定的全限定名类名(如：java.lang.Object)来装载class文件到Runtime data area中的method area。</p>
+<p>Execution engine（执行引擎）：执行classes中的指令。</p>
+<p>Native Interface(本地接口)：与native libraries交互，是其它编程语言交互的接口。</p>
+<p>Runtime data area(运行时数据区域)：这就是我们常说的JVM的内存。</p>
+<p>作用 ：首先通过编译器把 Java 代码转换成字节码，类加载器（ClassLoader）再把字节码加载到内存中，将其放在运行时数据区（Runtime data area）的方法区内，而字节码文件只是 JVM 的一套指令集规范，并不能直接交给底层操作系统去执行，因此需要特定的命令解析器执行引擎（Execution Engine），将字节码翻译成底层系统指令，再交由 CPU 去执行，而这个过程中需要调用其他语言的本地库接口（Native Interface）来实现整个程序的功能。</p>
 <a id="more"></a>
+<img src="/img/jvm01.png">
 
-<p>或者说还有自己引用了自己<br><img src="/img/springxunhuan02.jpg"></p>
-<p>基于构造器的循环依赖，就更不用说了，官方文档都摊牌了，你想让构造器注入支持循环依赖，是不存在的，不如把代码改了。<br>那么默认单例的属性注入场景，Spring是如何支持循环依赖的？</p>
-<h3 id="spring解决循环依赖"><a href="#spring解决循环依赖" class="headerlink" title="spring解决循环依赖"></a>spring解决循环依赖</h3><p>首先，我们要知道 spring是怎么创建完成一个bean的<br><img src="/img/springxunhuan04.jpeg"><br>先调用构造函数进行实例化，然后填充属性，再接着进行其他附加操作和初始化，正是这样的生命周期，才有了Spring的解决循环依赖，这样的解决机制是根据Spring框架内定义的三级缓存来实现的，也就是说：三级缓存解决了Bean之间的循环依赖。直接上源码<br>先看看spring中Bean工厂是怎么获取Bean的（AbstractBeanFactory中）<br><img src="/img/springxunhuan09.jpeg"><br><img src="/img/springxunhuan08.jpeg"><br><img src="/img/springxunhuan07.jpeg"></p>
-<p>Spring内部维护了三个Map，也就是我们通常说的三级缓存。<br>在Spring的DefaultSingletonBeanRegistry类中，你就会看到这是三个map</p>
-<img src="/img/springxunhuan05.jpeg">
-
-<p> singletonObjects  ：单例池 缓存创建完成单例Bean的地方 里面放置的是实例化好的单例对象；<br> singletonFactories ：映射创建Bean的原始工厂 里面存放的是要被实例化的对象的对象工厂。<br> earlySingletonObjects ：里面存放的是提前曝光的单例对象；映射Bean的早期引用，也就是说在这个Map里的Bean不是完整的，甚至还不能称之为“Bean”，只是一个Instance.</p>
-<p> 所以当一个Bean调用构造函数进行实例化后，即使属性还未填充，就可以通过三级缓存向外暴露依赖的引用值（所以循环依赖问题的解决也是基于Java的引用传递），这也说明了另外一点，基于构造函数的注入，如果有循环依赖，Spring是不能够解决的。还要说明一点，Spring默认的Bean Scope是单例的，而三级缓存中都包含singleton，可见是对于单例Bean之间的循环依赖的解决，Spring是通过三级缓存来实现的</p>
-<h3 id="spring解决循环依赖的本质"><a href="#spring解决循环依赖的本质" class="headerlink" title="spring解决循环依赖的本质"></a>spring解决循环依赖的本质</h3><p> 大致了解以后 我们手写解决循环依赖<br> 将指定的一些类实例为单例<br> 类中的字段也都实例为单例<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> //类A</span><br><span class="line"> public class A &#123;</span><br><span class="line">    private B b;</span><br><span class="line">&#125;</span><br><span class="line">// 类B：</span><br><span class="line">public class B &#123;</span><br><span class="line">    private A a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">     * 放置创建好的bean Map</span><br><span class="line">     */</span><br><span class="line">    private static Map&lt;String, Object&gt; cacheMap = new HashMap&lt;&gt;(2);</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 假装扫描出来的对象</span><br><span class="line">        Class[] classes = &#123;A.class, B.class&#125;;</span><br><span class="line">        // 假装项目初始化实例化所有bean</span><br><span class="line">        <span class="keyword">for</span> (Class aClass : classes) &#123;</span><br><span class="line">            getBean(aClass);</span><br><span class="line">        &#125;</span><br><span class="line">        // check</span><br><span class="line">        System.out.println(getBean(B.class).getA() == getBean(A.class));</span><br><span class="line">        System.out.println(getBean(A.class).getB() == getBean(B.class));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @SneakyThrows</span><br><span class="line">    private static &lt;T&gt; T getBean(Class&lt;T&gt; beanClass) &#123;</span><br><span class="line">        // 本文用类名小写 简单代替bean的命名规则</span><br><span class="line">        String beanName = beanClass.getSimpleName().toLowerCase();</span><br><span class="line">        // 如果已经是一个bean，则直接返回</span><br><span class="line">        <span class="keyword">if</span> (cacheMap.containsKey(beanName)) &#123;</span><br><span class="line">            <span class="built_in">return</span> (T) cacheMap.get(beanName);</span><br><span class="line">        &#125;</span><br><span class="line">        // 将对象本身实例化</span><br><span class="line">        Object object = beanClass.getDeclaredConstructor().newInstance();</span><br><span class="line">        // 放入缓存</span><br><span class="line">        cacheMap.put(beanName, object);</span><br><span class="line">        // 把所有字段当成需要注入的bean，创建并注入到当前bean中</span><br><span class="line">        Field[] fields = object.getClass().getDeclaredFields();</span><br><span class="line">        <span class="keyword">for</span> (Field field : fields) &#123;</span><br><span class="line">            field.setAccessible(<span class="literal">true</span>);</span><br><span class="line">            // 获取需要注入字段的class</span><br><span class="line">            Class&lt;?&gt; fieldClass = field.getType();</span><br><span class="line">            String fieldBeanName = fieldClass.getSimpleName().toLowerCase();</span><br><span class="line">            // 如果需要注入的bean，已经在缓存Map中，那么把缓存Map中的值注入到该field即可</span><br><span class="line">            // 如果缓存没有 继续创建</span><br><span class="line">            field.set(object, cacheMap.containsKey(fieldBeanName)</span><br><span class="line">                    ? cacheMap.get(fieldBeanName) : getBean(fieldClass));</span><br><span class="line">        &#125;</span><br><span class="line">        // 属性填充完成，返回</span><br><span class="line">        <span class="built_in">return</span> (T) object;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>这段代码的效果，其实就是处理了循环依赖，并且处理完成后，cacheMap中放的就是完整的“Bean”了<br><img src="/img/springxunhuan03.jpg"></p>
-<p>这就是“循环依赖”的本质  并且它类似于一个面试题，问题内容是：给定一个数组，给定一个数字。返回数组中可以相加得到指定数字的两个索引。比如：给定nums = [1, 3, 5, 6], target = 4 那么要返回 [0, 1]，因为1 + 3 = 4这道题的优解是，一次遍历+HashMap：<br>上代码：</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int[] twoSum(int[] nums, int target) &#123;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (int i = 0; i &lt; nums.length; i++) &#123;</span><br><span class="line">            int complement = target - nums[i];</span><br><span class="line">			//去map中找到想要的数字 如果没有的话 就把这个数字和索引保存到mqp里</span><br><span class="line">            <span class="keyword">if</span> (map.containsKey(complement)) &#123;</span><br><span class="line">			//如果恰巧有需要的数字就返回</span><br><span class="line">                <span class="built_in">return</span> new int[] &#123; map.get(complement), i &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">            map.put(nums[i], i);</span><br><span class="line">        &#125;</span><br><span class="line">        throw new IllegalArgumentException(<span class="string">"No two sum solution"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>先去Map中找需要的数字，没有就将当前的数字保存在Map中，如果找到需要的数字，则一起返回。<br>是不是就像是先去缓存里找Bean，没有则实例化当前的Bean放到Map，如果有需要依赖当前Bean的，就能从Map取到。当然spring循环依赖要比这个复杂的多</p>
+<p>Java程序运行机制详细说明:<br>Java程序运行机制步骤</p>
+<p>首先利用IDE集成开发工具编写Java源代码，源文件的后缀为.java；<br>再利用编译器(javac命令)将源代码编译成字节码文件，字节码文件的后缀名为.class；<br>运行字节码的工作是由解释器(java命令)来完成的。<br>java文件通过编译器变成了.class文件，接下来类加载器又将这些.class文件加载到JVM中。<br>其实可以一句话来解释：类的加载指的是将类的.class文件中的二进制数据读入到内存中，将其放在运行时数据区的方法区内，然后在堆区创建一个 java.lang.Class对象，用来封装类在方法区内的数据结构。</p>
+<h3 id="JVM-运行时数据区"><a href="#JVM-运行时数据区" class="headerlink" title="JVM 运行时数据区"></a>JVM 运行时数据区</h3><p>Java 虚拟机在执行 Java 程序的过程中会把它所管理的内存区域划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁的时间，有些区域随着虚拟机进程的启动而存在，有些区域则是依赖线程的启动和结束而建立和销毁。Java 虚拟机所管理的内存被划分为如下几个区域：<br><img src="/img/jvm02.png"><br>程序计数器（Program Counter Register）：当前线程所执行的字节码的行号指示器，字节码解析器的工作是通过改变这个计数器的值，来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能，都需要依赖这个计数器来完成；<br>Java 虚拟机栈（Java Virtual Machine Stacks）：用于存储局部变量表、操作数栈、动态链接、方法出口等信息；<br>本地方法栈（Native Method Stack）：与虚拟机栈的作用是一样的，只不过虚拟机栈是服务 Java 方法的，而本地方法栈是为虚拟机调用 Native 方法服务的；<br>Java 堆（Java Heap）：Java 虚拟机中内存最大的一块，是被所有线程共享的，几乎所有的对象实例都在这里分配内存；<br>方法区（Methed Area）：用于存储已被虚拟机加载的类信息、常量、静态变量、即时编译后的代码等数据。</p>
+<h3 id="堆栈的区别"><a href="#堆栈的区别" class="headerlink" title="堆栈的区别:"></a>堆栈的区别:</h3><p>物理地址</p>
+<p>堆的物理地址分配对对象是不连续的。因此性能慢些。在GC的时候也要考虑到不连续的分配，所以有各种算法。比如，标记-消除，复制，标记-压缩，分代（即新生代使用复制算法，老年代使用标记——压缩）</p>
+<p>栈使用的是数据结构中的栈，先进后出的原则，物理地址分配是连续的。所以性能快。</p>
+<p>内存分别</p>
+<p>堆因为是不连续的，所以分配的内存是在运行期确认的，因此大小不固定。一般堆大小远远大于栈。</p>
+<p>栈是连续的，所以分配的内存大小要在编译期就确认，大小是固定的。</p>
+<p>存放的内容</p>
+<p>堆存放的是对象的实例和数组。因此该区更关注的是数据的存储</p>
+<p>栈存放：局部变量，操作数栈，返回结果。该区更关注的是程序方法的执行。</p>
+<p>PS：</p>
+<p>静态变量放在方法区<br>静态的对象还是放在堆。<br>程序的可见度</p>
+<p>堆对于整个应用程序都是共享、可见的。</p>
+<p>栈只对于线程是可见的。所以也是线程私有。他的生命周期和线程相同。</p>
+<h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器:"></a>垃圾收集器:</h3><p>垃圾回收机制：在java中，程序员是不需要显示的去释放一个对象的内存的，而是由虚拟机自行执行。在JVM中，有一个垃圾回收线程，它是低优先级的，在正常情况下是不会执行的，只有在虚拟机空闲或者当前堆内存不足时，才会触发执行，扫面那些没有被任何引用的对象，并将它们添加到要回收的集合中，进行回收。<br>GC：GC 是垃圾收集的意思（Gabage Collection）,内存处理是编程人员容易出现问题的地方，忘记或者错误的内存<br>回收会导致程序或系统的不稳定甚至崩溃，Java 提供的 GC 功能可以自动监测对象是否超过作用域从而达到自动<br>回收内存的目的，Java 语言没有提供释放已分配内存的显示操作方法。</p>
+<h3 id="java中的引用类型："><a href="#java中的引用类型：" class="headerlink" title="java中的引用类型："></a>java中的引用类型：</h3><p>强引用：发生 gc 的时候不会被回收。<br>软引用：有用但不是必须的对象，在发生内存溢出之前会被回收。<br>弱引用：有用但不是必须的对象，在下一次GC时会被回收。<br>虚引用（幽灵引用/幻影引用）：无法通过虚引用获得对象，用 PhantomReference 实现虚引用，虚引用的用途是在 gc 时返回一个通知。</p>
+<h3 id="判断对象是否可以被回收："><a href="#判断对象是否可以被回收：" class="headerlink" title="判断对象是否可以被回收："></a>判断对象是否可以被回收：</h3><p>引用计数器法：为每个对象创建一个引用计数，有对象引用时计数器 +1，引用被释放时计数 -1，当计数器为 0 时就可以被回收。它有一个缺点不能解决循环引用的问题；<br>可达性分析算法：从 GC Roots 开始向下搜索，搜索所走过的路径称为引用链。当一个对象到 GC Roots 没有任何引用链相连时，则证明此对象是可以被回收的。</p>
+<h3 id="jvm的垃圾回收算法："><a href="#jvm的垃圾回收算法：" class="headerlink" title="jvm的垃圾回收算法："></a>jvm的垃圾回收算法：</h3><p>标记-清除算法：标记无用对象，然后进行清除回收。缺点：效率不高，无法清除垃圾碎片。<br>复制算法：按照容量划分二个大小相等的内存区域，当一块用完的时候将活着的对象复制到另一块上，然后再把已使用的内存空间一次清理掉。缺点：内存使用率不高，只有原来的一半。<br>标记-整理算法：标记无用对象，让所有存活的对象都向一端移动，然后直接清除掉端边界以外的内存。<br>分代算法：根据对象存活周期的不同将内存划分为几块，一般是新生代和老年代，新生代基本采用复制算法，老年代采用标记整理算法。</p>
+<h3 id="jvm的垃圾回收器："><a href="#jvm的垃圾回收器：" class="headerlink" title="jvm的垃圾回收器："></a>jvm的垃圾回收器：</h3><p>下图展示了7种作用于不同分代的收集器，其中用于回收新生代的收集器包括Serial、PraNew、Parallel Scavenge，回收老年代的收集器包括Serial Old、Parallel Old、CMS，还有用于回收整个Java堆的G1收集器。不同收集器之间的连线表示它们可以搭配使用。<br><img src="img/jvm03"><br>Serial收集器（复制算法): 新生代单线程收集器，标记和清理都是单线程，优点是简单高效；<br>ParNew收集器 (复制算法): 新生代收并行集器，实际上是Serial收集器的多线程版本，在多核CPU环境下有着比Serial更好的表现；<br>Parallel Scavenge收集器 (复制算法): 新生代并行收集器，追求高吞吐量，高效利用 CPU。吞吐量 = 用户线程时间/(用户线程时间+GC线程时间)，高吞吐量可以高效率的利用CPU时间，尽快完成程序的运算任务，适合后台应用等对交互相应要求不高的场景；<br>Serial Old收集器 (标记-整理算法): 老年代单线程收集器，Serial收集器的老年代版本；<br>Parallel Old收集器 (标记-整理算法)： 老年代并行收集器，吞吐量优先，Parallel Scavenge收集器的老年代版本；<br>CMS(Concurrent Mark Sweep)收集器（标记-清除算法）： 老年代并行收集器，以获取最短回收停顿时间为目标的收集器，具有高并发、低停顿的特点，追求最短GC回收停顿时间。<br>G1(Garbage First)收集器 (标记-整理算法)： Java堆并行收集器，G1收集器是JDK1.7提供的一个新收集器，G1收集器基于“标记-整理”算法实现，也就是说不会产生内存碎片。此外，G1收集器不同于之前的收集器的一个重要特点是：G1回收的范围是整个Java堆(包括新生代，老年代)，而前六种收集器回收的范围仅限于新生代或老年代。<br>————————————————<br>版权声明：本文为CSDN博主「ThinkWon」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://thinkwon.blog.csdn.net/article/details/104390752" target="_blank" rel="noopener">https://thinkwon.blog.csdn.net/article/details/104390752</a></p>
 
       
 
@@ -279,7 +287,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/12/19/spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/01/11/JVM/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -293,18 +301,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/12/21/spring01/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          spring源码的理解
+          为什么在foreach循环中不能add/remove元素的分析
         
       </div>
     </a>
   
   
-    <a href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">为什么在foreach循环中不能add/remove元素的分析</div>
+    <a href="/2018/12/02/JDK%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8C%20CGLIB%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%EF%BC%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JDK 动态代理和 CGLIB 动态代理！</div>
       <i class="icon-circle-right"></i>
     </a>
   
