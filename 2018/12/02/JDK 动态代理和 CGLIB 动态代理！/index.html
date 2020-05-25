@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | fangzheng</title>
+  <title>JDK 动态代理和 CGLIB 动态代理！ | fangzheng</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="fangzheng">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="阅读源码总会说使用动态代理比如spring aop spring事务注解  今天就研究一下 静态代理动态代理之前得先了解一下静态代理这个是非常简单的 静态代理 是通过代码的方式解决的就是在程序运行之前已经编译好了的东西举个例子：1、RealSubject 是委托类，Proxy 是代理类；2、Subject 是委托类和代理类的接口；3、request() 是委托类和代理类的共同方法；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JDK 动态代理和 CGLIB 动态代理！">
+<meta property="og:url" content="http://yoursite.com/2018/12/02/JDK%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8C%20CGLIB%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%EF%BC%81/index.html">
 <meta property="og:site_name" content="fangzheng">
+<meta property="og:description" content="阅读源码总会说使用动态代理比如spring aop spring事务注解  今天就研究一下 静态代理动态代理之前得先了解一下静态代理这个是非常简单的 静态代理 是通过代码的方式解决的就是在程序运行之前已经编译好了的东西举个例子：1、RealSubject 是委托类，Proxy 是代理类；2、Subject 是委托类和代理类的接口；3、request() 是委托类和代理类的共同方法；">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-12-02T13:20:55.000Z">
+<meta property="article:modified_time" content="2020-05-25T02:57:27.286Z">
 <meta property="article:author" content="FangZheng">
 <meta name="twitter:card" content="summary">
   
@@ -150,167 +154,177 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-JDK 动态代理和 CGLIB 动态代理！" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/21/spring01/" class="archive-article-date">
-  	<time datetime="2019-12-21T12:20:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-21</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/21/spring01/">spring源码的理解</a>
+    <h1 class="article-title" itemprop="name">
+      JDK 动态代理和 CGLIB 动态代理！
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/12/19/spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/" class="archive-article-date">
-  	<time datetime="2019-12-19T12:12:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/12/19/spring%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96/">spring循环依赖</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/" class="archive-article-date">
-  	<time datetime="2019-03-02T13:12:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/">为什么在foreach循环中不能add/remove元素的分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-      
-        </div></section>
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/12/02/JDK%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8C%20CGLIB%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%EF%BC%81/" class="archive-article-date">
+        
+        <a href="/2018/12/02/JDK%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8C%20CGLIB%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%EF%BC%81/" class="archive-article-date">
   	<time datetime="2018-12-02T13:20:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-02</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/12/02/JDK%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8C%20CGLIB%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%EF%BC%81/">JDK 动态代理和 CGLIB 动态代理！</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>阅读源码总会说使用动态代理比如spring aop spring事务注解  今天就研究一下</p>
+<h3 id="静态代理"><a href="#静态代理" class="headerlink" title="静态代理"></a>静态代理</h3><p>动态代理之前得先了解一下静态代理这个是非常简单的 静态代理 是通过代码的方式解决的就是在程序运行之前已经编译好了的东西<br>举个例子：<br>1、RealSubject 是委托类，Proxy 是代理类；<br>2、Subject 是委托类和代理类的接口；<br>3、request() 是委托类和代理类的共同方法；</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">interface Subject &#123;</span><br><span class="line">    void request();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class RealSubject implements Subject &#123;</span><br><span class="line">    public void <span class="function"><span class="title">request</span></span>()&#123;</span><br><span class="line">        System.out.println(<span class="string">"RealSubject"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Proxy implements Subject &#123;</span><br><span class="line">    private Subject subject;</span><br><span class="line"></span><br><span class="line">    public Proxy(Subject subject)&#123;</span><br><span class="line">        this.subject = subject;</span><br><span class="line">    &#125;</span><br><span class="line">    public void <span class="function"><span class="title">request</span></span>()&#123;</span><br><span class="line">        System.out.println(<span class="string">"begin"</span>);</span><br><span class="line">        subject.request();</span><br><span class="line">        System.out.println(<span class="string">"end"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class ProxyTest &#123;</span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">        RealSubject subject = new RealSubject();</span><br><span class="line">        Proxy p = new Proxy(subject);</span><br><span class="line">        p.request();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>就相当于是 在程序运行之前代码都是写好了的当我们在接口中增加方法是不仅要实现类增加方法的实现同时代理类也要增加新的方法，如果在项目规模较大的时候维护起来就不是很友好</p>
+<h3 id="JDK动态代理"><a href="#JDK动态代理" class="headerlink" title="JDK动态代理"></a>JDK动态代理</h3><p>动态代理呢代理类并不是在Java代码中实现，而是在运行时期生成，相比静态代理，动态代理可以很方便的对委托类的方法进行统一处理，如添加方法调用次数、添加日志功能等等，动态代理分为jdk动态代理和cglib动态代理，下面通过一个例子看看如何实现jdk动态代理。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">//定义业务逻辑</span><br><span class="line"></span><br><span class="line">public interface Service &#123;  </span><br><span class="line">    //目标方法 </span><br><span class="line">    public abstract void add();  </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">public class UserServiceImpl implements Service &#123;  </span><br><span class="line">    public void <span class="function"><span class="title">add</span></span>() &#123;  </span><br><span class="line">        System.out.println(<span class="string">"This is add service"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br><span class="line">//利用java.lang.reflect.Proxy类和java.lang.reflect.InvocationHandler接口定义代理类的实现。</span><br><span class="line"></span><br><span class="line">class MyInvocatioHandler implements InvocationHandler &#123;</span><br><span class="line">    private Object target;</span><br><span class="line"></span><br><span class="line">    public MyInvocatioHandler(Object target) &#123;</span><br><span class="line">        this.target = target;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	//proxy 代理目标对象的代理对象，它是真实的代理对象。</span><br><span class="line">    //method 执行目标类的方法</span><br><span class="line">	//args 执行目标类的方法的参数</span><br><span class="line">    @Override</span><br><span class="line">    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">        System.out.println(<span class="string">"-----before-----"</span>);</span><br><span class="line">        Object result = method.invoke(target, args);</span><br><span class="line">        System.out.println(<span class="string">"-----end-----"</span>);</span><br><span class="line">        <span class="built_in">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    // 生成代理对象</span><br><span class="line">    public Object <span class="function"><span class="title">getProxy</span></span>() &#123;</span><br><span class="line">        ClassLoader loader = Thread.currentThread().getContextClassLoader();</span><br><span class="line">        Class&lt;?&gt;[] interfaces = target.getClass().getInterfaces();</span><br><span class="line">        <span class="built_in">return</span> Proxy.newProxyInstance(loader, interfaces, this);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//使用动态代理</span><br><span class="line"></span><br><span class="line">public class ProxyTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Service service = new UserServiceImpl();</span><br><span class="line">        MyInvocatioHandler handler = new MyInvocatioHandler(service);</span><br><span class="line">        Service serviceProxy = (Service)handler.getProxy();</span><br><span class="line">        serviceProxy.add();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">执行结果：</span><br><span class="line"></span><br><span class="line">-----before-----</span><br><span class="line">This is add service</span><br><span class="line">-----end-----</span><br></pre></td></tr></table></figure>
+<h3 id="CGLIB-动态代理"><a href="#CGLIB-动态代理" class="headerlink" title="CGLIB 动态代理"></a>CGLIB 动态代理</h3><p>相比于 JDK 动态代理的实现，CGLIB 动态代理不需要实现与目标类一样的接口，而是通过方法拦截的方式实现代理，代码实现如下，首先方法拦截接口 net.sf.cglib.proxy.MethodInterceptor。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">public interface Animal&#123;</span><br><span class="line">	void call();</span><br><span class="line">&#125;</span><br><span class="line">public class Cat implements Animal &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void <span class="function"><span class="title">call</span></span>() &#123;       </span><br><span class="line">	System.out.println(<span class="string">"喵喵喵 ~"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//实现 MethodInterceptor 接口</span><br><span class="line"></span><br><span class="line">public class TargetInterceptor implements MethodInterceptor &#123;</span><br><span class="line"></span><br><span class="line">//obj 代理类对象</span><br><span class="line">//method 当前被代理拦截的方法</span><br><span class="line">//args 拦截方法的参数</span><br><span class="line">//proxy 代理类对应目标类的代理方法</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable &#123;        </span><br><span class="line">	System.out.println(<span class="string">"CGLIB 调用前"</span>);</span><br><span class="line">        Object result = proxy.invokeSuper(obj, args);</span><br><span class="line">        System.out.println(<span class="string">"CGLIB 调用后"</span>);</span><br><span class="line">        <span class="built_in">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//创建动态代理类</span><br><span class="line"></span><br><span class="line">public class CglibProxy &#123;</span><br><span class="line"></span><br><span class="line">    public static Object getProxy(Class&lt;?&gt; clazz)&#123;</span><br><span class="line">        Enhancer enhancer = new Enhancer();</span><br><span class="line">        // 设置类加载</span><br><span class="line">        enhancer.setClassLoader(clazz.getClassLoader());</span><br><span class="line">        // 设置被代理类</span><br><span class="line">        enhancer.setSuperclass(clazz);</span><br><span class="line">        // 设置方法拦截器</span><br><span class="line">        enhancer.setCallback(new TargetInterceptor());</span><br><span class="line">        // 创建代理类</span><br><span class="line">        <span class="built_in">return</span> enhancer.create();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Main &#123;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void dynamicProxy() throws Exception &#123;</span><br><span class="line">        Animal cat = (Animal) CglibProxy.getProxy(Cat.class);        </span><br><span class="line">		cat.call();   </span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
 
+
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/12/02/JDK%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E5%92%8C%20CGLIB%20%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%EF%BC%81/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/03/21/hashmap01/" class="archive-article-date">
-  	<time datetime="2018-03-21T06:15:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-21</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2019/03/02/foreach%E5%BE%AA%E7%8E%AF%E4%B8%AD%E4%B8%8D%E8%83%BDlistremove/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          为什么在foreach循环中不能add/remove元素的分析
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/21/hashmap01/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JDK1.7hashmap的理解</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/21/hashmap01/">JDK1.7hashmap的理解</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -333,8 +347,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
